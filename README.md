@@ -4,9 +4,14 @@ Common utility hooks for React Applications
 
 ## Usage
 
-Import package.
+Add dependency.
 ```
 npm i @4react/hooks
+```
+
+Import the strictly necessary
+```js
+import useTimeout from '@4react/useTimeout'
 ```
 
 ## List of hooks
