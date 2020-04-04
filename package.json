@@ -1,22 +1,18 @@
 {
   "name": "@4react/hooks",
-  "version": "2020.1.0",
+  "version": "2020.1.1",
   "author": "Matteo Zanoncello",
   "repository": {
     "type": "git",
     "url": "https://github.com/4react/hooks"
   },
   "license": "ISC",
-  "types": "lib/types",
-  "files": [
-    "lib",
-    "package.json",
-    "README.md"
-  ],
+  "types": "types",
   "scripts": {
     "clean": "rimraf lib",
     "tsc": "tsc --rootDir src --outDir lib",
-    "build": "npm run clean && npm run tsc"
+    "cp": "copyfiles package.json lib",
+    "build": "npm run clean && npm run tsc && npm run cp"
   },
   "dependencies": {
     "lodash": "^4.17.15",
@@ -32,6 +28,7 @@
     "@types/node": "^13.11.0",
     "@types/react": "^16.9.32",
     "@typescript-eslint/parser": "^2.6.1",
+    "copyfiles": "^2.2.0",
     "eslint": "^6.6.0",
     "rimraf": "^3.0.0",
     "typescript": "^3.7.5"
