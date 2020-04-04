@@ -1,8 +1,8 @@
-import { createRef, useEffect, RefObject, useState } from 'react'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import debounce from 'lodash/debounce'
 
 const useElementSize = <T extends HTMLElement>() => {
-  const ref: RefObject<T> = createRef<T>()
+  const ref: MutableRefObject<T | undefined> = useRef<T>()
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)
 
@@ -11,7 +11,7 @@ const useElementSize = <T extends HTMLElement>() => {
     const { clientWidth, clientHeight } = ref.current
     setWidth(clientWidth)
     setHeight(clientHeight)
-  }, 200)
+  }, 50)
 
   useEffect(() => {
     window.addEventListener('resize', onResize)
