@@ -72,9 +72,10 @@ useDocumentSize((width, height) => {
 })
 ```
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| callback | Function | - | A function called each time the document is resized. It receives new values of **width** and **height**. |
+| Return (array) | Type | Description |
+| --- | --- | --- |
+| width | number | The actual width of the document. |
+| height | number | The actual height of the document. |
 
 ### useElementSize
 ```jsx
@@ -87,13 +88,11 @@ const myElementRef = useElementSize((width, height) => {
 <MyElement ref={myElementRef} />
 ```
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| callback | Function | - | A function called each time the element is resized. It receives new values of **width** and **height**. |
-
-| Return | Type | Description |
+| Return (array) | Type | Description |
 | --- | --- | --- |
 | ref | React.RefObject | The reference object to pass to the element for which we want to listen for resize. |
+| width | number | The actual width of the element. |
+| height | number | The actual height of the element. |
 
 ### useInterval
 ```jsx
