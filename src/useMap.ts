@@ -1,33 +1,33 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 
-type MapState = {[key: string]: any}
+type MapState<T> = {[key: string]: T}
 
-export class MapForState {
-  _state: MapState
-  _setState: (newState: MapState) => void
+export class MapForState<T> {
+  _state: MapState<T>
+  _setState: Dispatch<SetStateAction<MapState<T>>>
 
-  constructor(state: MapState, setState: (newState: MapState) => void) {
+  constructor(state: MapState<T>, setState: Dispatch<SetStateAction<MapState<T>>>) {
     this._state = state
     this._setState = setState
   }
 
-  get size() {
+  get size(): number {
     return this.keys.length
   }
 
-  get keys() {
+  get keys(): string[] {
     return Object.keys(this._state)
   }
 
-  get values() {
+  get values(): T[] {
     return Object.values(this._state)
   }
 
-  get(key: string) {
+  get(key: string): T {
     return this._state[key]
   }
 
-  set(key: string, value: any) {
+  set(key: string, value: any): MapState<T> {
     const newState = {
       ...this._state,
       [key]: value
@@ -36,19 +36,25 @@ export class MapForState {
     return newState
   }
 
-  has(key: string) {
+  has(key: string): boolean {
     return this._state.hasOwnProperty(key)
   }
 
-  clear() {
+  clear(): void {
     this._setState({})
   }
 
-  delete(key: string) {
+  delete(key: string): boolean {
     if(this.has(key)) {
-      this._setState({
-        ...this.keys.filter(k => k !== key).map(k => this._state[k])
-      })
+      const otherKeys = this.keys.filter(k => k !== key)
+      const newState = otherKeys.reduce<MapState<T>>(
+        (newState: MapState<T>, currentKey: string) => {
+          newState[key] = this.get(currentKey)
+          return newState
+        }, {}
+      )
+
+      this._setState(newState)
       return true
     }
     return false
@@ -74,9 +80,9 @@ export class MapForState {
  * @param {MapState} [initialValue] Initial value of the state.
  * @returns {MapForState} An object with the same methods of JavaScript standard Map.
  */
-const useMap = (initialValue: MapState = {}) => {
-  const [map, setMap] = useState(initialValue)
-  return new MapForState(map, setMap)
+const useMap = <T>(initialValue: MapState<T> = {}) => {
+  const [map, setMap] = useState<MapState<T>>(initialValue)
+  return new MapForState<T>(map, setMap)
 }
 
 export default useMap
