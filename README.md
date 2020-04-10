@@ -30,6 +30,7 @@ import useTimeout from '@4react/useTimeout'
 | Name | Description |
 | --- | --- |
 | [useArray](#usearray) | Manages an array state and provides helpful methods to updates it |
+| [useMap](#usemap) | Manages a map state and provides helpful methods to updates it |
 
 #### Time
 
@@ -113,6 +114,23 @@ useEffect(() => {
 | counter | number | The number of interval passed since the last reset. |
 | clear | Function | Clear the interval. |
 | reset | Function | Restart the interval and reset the counter. |
+
+### useMap
+```jsx
+const map = useMap()
+
+...
+
+<button onClick={() => map.set(key, value)}>ADD</button>
+<button onClick={() => map.delete(key)}>DELETE</button>
+{map.values(val => <li>{val}</li>)}
+```
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| initialValue | object<string,any> | {} | Initial values for the map. |
+
+Returned object has the same methods and signatures of the standard [JavaScript Map](https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Map) class.
 
 ### useScreenOrientation
 ```jsx
