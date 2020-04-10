@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 type MapState = {[key: string]: any}
 
-class MapForState {
+export class MapForState {
   _state: MapState
   _setState: (newState: MapState) => void
 

@@ -56,15 +56,7 @@ const { values, push, pop } = useArray()
 | --- | --- | --- | --- |
 | initialValue | any[] | [] | Initial values for the array. |
 
-| Return (object) | Type | Description |
-| --- | --- | --- |
-| values | any[] | The elements in the array. |
-| setValues | Function | Take a new array of element to replace the stored one. |
-| clear | Function | Empty the array. |
-| push | Function | Adds new elements to the end of an array, and returns the new length. |
-| pop | Function | Removes the last element of an array, and returns that element. |
-| shift | Function | Removes the first element of an array, and returns that element. |
-| unshift | Function | Adds new elements to the beginning of an array, and returns the new length. |
+Returned object has the same methods and signatures of the standard [JavaScript Array](https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Array) class.
 
 ### useDocumentSize
 ```jsx
