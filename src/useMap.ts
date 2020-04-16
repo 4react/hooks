@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useMemo, useState } from 'react'
 
-type MapState<T> = {[key: string]: T}
+type MapState<T> = { [key: string]: T }
 
 export class MapForState<T> {
   _state: MapState<T>
@@ -27,13 +27,11 @@ export class MapForState<T> {
     return this._state[key]
   }
 
-  set(key: string, value: any): MapState<T> {
-    const newState = {
-      ...this._state,
+  set(key: string, value: T): void {
+    this._setState(prevState => ({
+      ...prevState,
       [key]: value
-    }
-    this._setState(newState)
-    return newState
+    }))
   }
 
   has(key: string): boolean {
@@ -45,16 +43,16 @@ export class MapForState<T> {
   }
 
   delete(key: string): boolean {
-    if(this.has(key)) {
-      const otherKeys = this.keys.filter(k => k !== key)
-      const newState = otherKeys.reduce<MapState<T>>(
-        (newState: MapState<T>, currentKey: string) => {
-          newState[key] = this.get(currentKey)
-          return newState
-        }, {}
-      )
-
-      this._setState(newState)
+    if (this.has(key)) {
+      this._setState(prevState => {
+        const otherKeys = Object.keys(prevState).filter(k => k !== key)
+        return otherKeys.reduce<MapState<T>>(
+          (newState: MapState<T>, currentKey: string) => {
+            newState[key] = prevState[currentKey]
+            return newState
+          }, {}
+        )
+      })
       return true
     }
     return false
@@ -81,8 +79,44 @@ export class MapForState<T> {
  * @returns {MapForState} An object with the same methods of JavaScript standard Map.
  */
 const useMap = <T>(initialValue: MapState<T> = {}) => {
-  const [map, setMap] = useState<MapState<T>>(initialValue)
-  return new MapForState<T>(map, setMap)
+  const [map, setValues] = useState<MapState<T>>(initialValue)
+
+  const keys: string[] = useMemo(() => Object.keys(map), [map])
+
+  const values: T[] = useMemo(() => Object.values(map), [map])
+
+  const size: number = useMemo(() => keys.length, [map])
+
+  const get = (key: string): T => {
+    return map[key]
+  }
+
+  const set = (key: string, value: T): void => {
+    setValues(prevState => ({
+      ...prevState,
+      [key]: value
+    }))
+  }
+
+  const has = (key: string): boolean => {
+    return keys.includes(key)
+  }
+
+  const remove = (key: string): void => {
+    if (has(key)) {
+      setValues(prevState => {
+        const otherKeys = Object.keys(prevState).filter(k => k !== key)
+        return otherKeys.reduce<MapState<T>>(
+          (newState: MapState<T>, currentKey: string) => {
+            newState[key] = prevState[currentKey]
+            return newState
+          }, {}
+        )
+      })
+    }
+  }
+
+  return { keys, values, size, get, setValues, set, has, remove }
 }
 
 export default useMap

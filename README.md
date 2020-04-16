@@ -29,8 +29,9 @@ import useTimeout from '@4react/useTimeout'
 
 | Name | Description |
 | --- | --- |
-| [useArray](#usearray) | Manages an array state and provides helpful methods to updates it |
+| [useList](#uselist) | Manages an array state and provides helpful methods to updates it |
 | [useMap](#usemap) | Manages a map state and provides helpful methods to updates it |
+| [useStateWithEffect](#usestatewitheffect) | Manages a state and declares an effect on its value change |
 
 #### Time
 
@@ -40,23 +41,6 @@ import useTimeout from '@4react/useTimeout'
 | [useTimeout](#usetimeout) | Turns a flag from false to true after ***ms*** milliseconds. |
 
 ## APIs
-
-### useArray
-```jsx
-const { values, push, pop } = useArray()
-
-...
-
-<button onClick={() => push(newElement)}>PUSH</button>
-<button onClick={() => pop()}>POP</button>
-{values.map(el => <li>{el}</li>)}
-```
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| initialValue | any[] | [] | Initial values for the array. |
-
-Returned object has the same methods and signatures of the standard [JavaScript Array](https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Array) class.
 
 ### useDocumentSize
 ```jsx
@@ -107,6 +91,39 @@ useEffect(() => {
 | clear | Function | Clear the interval. |
 | reset | Function | Restart the interval and reset the counter. |
 
+### useList
+```jsx
+const books = useList()
+// ...
+const removeLast = () => {
+  alert(`You removed ${books.last}`)
+  books.pop()
+}
+// ...
+<li>
+  {books.values.map(book => (
+    <li>{book}</li>
+  ))}
+</li>
+```
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| initialValue | any[] | [] | Initial values for the list. |
+
+| Return (object) | Type | Description |
+| --- | --- | --- |
+| values | any[] | Array of all stored items |
+| length | number | Number of stored items |
+| first | any | First stored element |
+| last | any | Last stored element |
+| set | Function | Sets the entire state |
+| get | Function | Gets the items at the required position |
+| push | Function | Adds items at the end of the list |
+| pop | Function | Removes last item from the list |
+| shift | Function | Adds items at the beginning of the list |
+| unshift | Function | Removes first item from the list |
+
 ### useMap
 ```jsx
 const map = useMap()
@@ -122,13 +139,36 @@ const map = useMap()
 | --- | --- | --- | --- |
 | initialValue | object<string,any> | {} | Initial values for the map. |
 
-Returned object has the same methods and signatures of the standard [JavaScript Map](https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Global_Objects/Map) class.
+| Return (object) | Type | Description |
+| --- | --- | --- |
+| keys | string[] | Array of all keys of the store |
+| values | any[] | Array of all values of the store |
+| size | number | Number of stored values |
+| get | Function | Gets the value associated to the required key |
+| set | Function | Sets a value for the specified key |
+| setValues | Function | Sets the entire state |
+| has | Function | Returns true if the state contains the specified key |
+| remove | Function | Removes the specified key |
 
 ### useScreenOrientation
 ```jsx
 useScreenOrientation((orientation) => {
   // do something
 })
+```
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| callback | Function | - | A function called each time the screen orientation change. It receives new **orientation**. |
+
+### useStateWithEffect
+```jsx
+const [value, setValue] = useStateWithEffect(
+  'initialValue',
+  (newState) => {
+    // do something
+  }
+)
 ```
 
 | Param | Type | Default | Description |
