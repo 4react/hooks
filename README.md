@@ -31,6 +31,7 @@ import useTimeout from '@4react/useTimeout'
 | --- | --- |
 | [useList](#uselist) | Manages an array state and provides helpful methods to updates it |
 | [useMap](#usemap) | Manages a map state and provides helpful methods to updates it |
+| [useToggle](#usetoggle) | Manages a boolean state and provides a method to negate its value |
 | [useStateWithEffect](#usestatewitheffect) | Manages a state and declares an effect on its value change |
 
 #### Time
@@ -44,32 +45,36 @@ import useTimeout from '@4react/useTimeout'
 
 ### useDocumentSize
 ```jsx
-useDocumentSize((width, height) => {
+const [width, height] = useDocumentSize()
+
+useEffect(() => {
   // do something
-})
+},[width, height])
 ```
 
 | Return (array) | Type | Description |
 | --- | --- | --- |
-| width | number | The actual width of the document. |
-| height | number | The actual height of the document. |
+| 1 | number | The actual width of the document. |
+| 2 | number | The actual height of the document. |
 
 ### useElementSize
 ```jsx
-const myElementRef = useElementSize((width, height) => {
+const [elRef, elWidth, elHeight] = useElementSize()
+
+useEffect(() => {
   // do something
-})
+}, [elWidth, elHeight])
 
 ...
 
-<MyElement ref={myElementRef} />
+<MyElement ref={elRef} />
 ```
 
 | Return (array) | Type | Description |
 | --- | --- | --- |
-| ref | React.RefObject | The reference object to pass to the element for which we want to listen for resize. |
-| width | number | The actual width of the element. |
-| height | number | The actual height of the element. |
+| 1 | React.RefObject | The reference object to pass to the element for which we want to listen for resize. |
+| 2 | number | The actual width of the element. |
+| 3 | number | The actual height of the element. |
 
 ### useInterval
 ```jsx
@@ -85,11 +90,11 @@ useEffect(() => {
 | ms | number | - | Milliseconds of the interval duration. |
 | max | number | - | Maximum number of increment before the interval is cleared automatically. |
 
-| Return | Type | Description |
+| Return (array) | Type | Description |
 | --- | --- | --- |
-| counter | number | The number of interval passed since the last reset. |
-| clear | Function | Clear the interval. |
-| reset | Function | Restart the interval and reset the counter. |
+| 1 | number | The number of interval passed since the last reset. |
+| 2 | Function | Method to clear the interval. |
+| 3 | Function | Method to restart the interval and reset the counter. |
 
 ### useList
 ```jsx
@@ -188,11 +193,32 @@ useEffect(() => {
 | --- | --- | --- | --- |
 | ms | number | - | Milliseconds of the timout duration. |
 
-| Return | Type | Description |
+| Return (array) | Type | Description |
 | --- | --- | --- |
-| elapsed | boolean | *True* if timeout is elapsed. |
-| clear | Function | Cancel the timeout. |
-| reset | Function | Start a new timeout. |
+| 1 | boolean | *True* if timeout is elapsed. |
+| 2 | Function | Method to cancel the timeout. |
+| 3 | Function | Method to reset the timeout. |
+
+### useToggle
+```jsx
+const [enabled, toggleEnabled] = useToggle()
+
+return (
+  <Switch
+    enabled={enabled}
+    onClick={toggleEnabled}
+  />
+)
+```
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| initialValue | boolean | false | Initial value of the state. |
+
+| Return (array)  | Type| Description |
+| --- | --- | --- |
+| 1 | boolean | The value of the state. |
+| 2 | Function | The toggle method. |
 
 ### useWindowScroll
 ```jsx
