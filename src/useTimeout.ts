@@ -1,9 +1,11 @@
 import { useState } from 'react'
 
 /**
- * Use a timeout.
- * @param {number} ms Timeout duration (milliseconds).
- * @returns {[boolean, Function, Function]}
+ * Sets a timeout and automatically change the state when elapsed.
+ * @param ms Timeout duration in milliseconds.
+ *
+ * @example
+ * * const [elapsed, clear, reset] = useTimeout(3000)
  */
 const useTimeout = (ms: number) => {
   const [elapsed, setElapsed] = useState(false)

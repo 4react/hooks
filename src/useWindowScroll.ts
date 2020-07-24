@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import debounce from 'lodash/debounce'
 
 const useWindowScroll = (callback: (scrollX: number, scrollY: number) => any) => {
-
   const onScroll = () => debounce(() => {
     const { scrollX, scrollY } = window
     callback(scrollX, scrollY)

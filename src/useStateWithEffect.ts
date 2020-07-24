@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react'
 
+/**
+ * Combines useState and useEffect into a single hook.
+ * @param initialValue Initial value for the state.
+ * @param effect Callback function the effect.
+ */
 const useStateWithEffect = <T>(
   initialValue: T,
   effect: (newState: T) => any

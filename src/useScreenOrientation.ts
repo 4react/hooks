@@ -1,5 +1,16 @@
 import { useEffect } from 'react'
 
+/**
+ * Fires a callback each time the screen orientation change.
+ * @param callback
+ *
+ * @example
+ * * useScreenOrientation((orientation) => {
+ * *   if (orientation.type === "landscape-primary") {
+ * *     // do something
+ * *   }
+ * * })
+ */
 const useScreenOrientation = (callback: (orientationInfo: ScreenOrientation) => any) => {
 
   const onOrientationChange = () => {

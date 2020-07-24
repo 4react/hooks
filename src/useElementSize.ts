@@ -1,6 +1,13 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import debounce from 'lodash/debounce'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
 
+/**
+ * Gets dimensions of the specified element and automatically updates them.
+ *
+ * @example
+ * * const [ref, width, height] = useElementSize()
+ * * return <Foo ref={ref} />
+ */
 const useElementSize = <T extends HTMLElement>() => {
   const ref: MutableRefObject<T | undefined> = useRef<T>()
   const [width, setWidth] = useState(0)

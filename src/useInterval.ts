@@ -1,12 +1,14 @@
 import { useState } from 'react'
 
 /**
- * Use an interval.
- * @param {number} ms Timeout duration (milliseconds).
- * @param {number} [max] Maximum number of iterations.
- * @returns {[boolean, Function, Function]}
+ * Sets an interval and automatically updates the number of expirations.
+ * @param ms Timeout duration in milliseconds.
+ * @param [max] Maximum number of expirations.
+ *
+ * @example
+ * * const [counter, clear, reset] = useInterval(3000)
  */
-const useInterval = (ms: number, max: number) => {
+const useInterval = (ms: number, max?: number) => {
   const [counter, setCounter] = useState(0)
   let interval: NodeJS.Timeout
 
