@@ -15,11 +15,11 @@
     "build": "npm run clean && npm run tsc && npm run cp"
   },
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "react": "^16.10.2"
   },
   "peerDependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "react": "^16.10.2"
   },
   "devDependencies": {
